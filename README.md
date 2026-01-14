@@ -7,8 +7,8 @@ This application enables an **Admin** to securely manage **Teachers, Courses, Cl
 
 ## 🚀 Live Demo
 
-- **Frontend (Admin Panel):** https://<your-frontend-url>
-- **Backend API:** https://<your-backend-url>
+- **Frontend (Admin Panel):** [https://<your-frontend-url>](https://lms-admin-panel-phi.vercel.app/#/login)
+- **Backend API:** https://[<your-backend-url>](https://lms-admin-panel-sy1r.onrender.com)
 
 > Live URLs will be updated after deployment.
 
@@ -19,13 +19,24 @@ This application enables an **Admin** to securely manage **Teachers, Courses, Cl
 - **Login URL:** `/login`
 
 ### Test Admin Credentials
-Email: admin@test.com
-Password: admin12345
+Email: admin@lms2.com
+Password: admin123
 
 ⚠️ These credentials are for testing only.  
 Admin registration is intentionally disabled in production.
 
 ---
+## 📸 Screenshots
+
+### Login Page
+![Login Page](./screenshots/login.png)
+
+### Admin Dashboard
+![Dashboard](./screenshots/dashboard.png)
+
+### Teacher Management
+![Teacher Management](./screenshots/teachers.png)
+
 
 ## 🧩 Features
 
