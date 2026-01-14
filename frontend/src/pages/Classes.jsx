@@ -18,7 +18,7 @@ const initialForm = {
   scheduleDay: "",
   scheduleTime: "",
   maxStudents: "",
-  status: "Active",
+  status: "active", // ✅ lowercase
 };
 
 export default function Classes() {
@@ -67,21 +67,13 @@ export default function Classes() {
   };
 
   const loadCourses = async () => {
-    try {
-      const res = await getCourses({ limit: 100 });
-      setCourses(res.data.courses);
-    } catch {
-      setError("Failed to load courses");
-    }
+    const res = await getCourses({ limit: 100 });
+    setCourses(res.data.courses);
   };
 
   const loadTeachers = async () => {
-    try {
-      const res = await getTeachers({ limit: 100 });
-      setTeachers(res.data.teachers);
-    } catch {
-      setError("Failed to load teachers");
-    }
+    const res = await getTeachers({ limit: 100 });
+    setTeachers(res.data.teachers);
   };
 
   const handleChange = (e) => {
@@ -92,41 +84,26 @@ export default function Classes() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !form.className ||
-      !form.classCode ||
-      !form.courseLinked ||
-      !form.teacherAssigned ||
-      !form.scheduleDay ||
-      !form.scheduleTime ||
-      !form.maxStudents
-    ) {
-      setError("Please fill all required fields");
-      return;
-    }
-
     const payload = {
       className: form.className,
       classCode: form.classCode,
       courseLinked: form.courseLinked,
       teacherAssigned: form.teacherAssigned,
       schedule: {
-        day: form.scheduleDay,
+        day: form.scheduleDay,   // ✅ enum-safe
         time: form.scheduleTime,
       },
       maxStudents: Number(form.maxStudents),
-      status: form.status,
+      status: form.status,       // ✅ lowercase enum
     };
 
     try {
       setLoading(true);
       setError("");
 
-      if (editingId) {
-        await updateClass(editingId, payload);
-      } else {
-        await createClass(payload);
-      }
+      editingId
+        ? await updateClass(editingId, payload)
+        : await createClass(payload);
 
       setForm(initialForm);
       setEditingId(null);
@@ -153,16 +130,9 @@ export default function Classes() {
   };
 
   const confirmDelete = async () => {
-    try {
-      setLoading(true);
-      await deleteClass(deleteId);
-      setDeleteId(null);
-      loadClasses();
-    } catch {
-      setError("Failed to delete class");
-    } finally {
-      setLoading(false);
-    }
+    await deleteClass(deleteId);
+    setDeleteId(null);
+    loadClasses();
   };
 
   return (
@@ -179,28 +149,33 @@ export default function Classes() {
           <select name="courseLinked" value={form.courseLinked} onChange={handleChange} required>
             <option value="">Select Course</option>
             {courses.map((c) => (
-              <option key={c._id} value={c._id}>
-                {c.courseName}
-              </option>
+              <option key={c._id} value={c._id}>{c.courseName}</option>
             ))}
           </select>
 
           <select name="teacherAssigned" value={form.teacherAssigned} onChange={handleChange} required>
             <option value="">Select Teacher</option>
             {teachers.map((t) => (
-              <option key={t._id} value={t._id}>
-                {t.name}
-              </option>
+              <option key={t._id} value={t._id}>{t.name}</option>
             ))}
           </select>
 
-          <input name="scheduleDay" placeholder="Day (e.g. Monday)" value={form.scheduleDay} onChange={handleChange} required />
+          {/* ✅ FIXED ENUM DROPDOWN */}
+          <select name="scheduleDay" value={form.scheduleDay} onChange={handleChange} required>
+            <option value="">Select Day</option>
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+          </select>
+
           <input name="scheduleTime" placeholder="Time (e.g. 9AM)" value={form.scheduleTime} onChange={handleChange} required />
           <input name="maxStudents" placeholder="Max Students" value={form.maxStudents} onChange={handleChange} required />
 
           <select name="status" value={form.status} onChange={handleChange}>
-            <option value="Active">Active</option>
-            <option value="Completed">Completed</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
           </select>
         </div>
 
@@ -208,56 +183,6 @@ export default function Classes() {
           {editingId ? "Update Class" : "Add Class"}
         </button>
       </form>
-
-      <div className="flex gap-3 mb-3">
-        <select value={courseFilter} onChange={(e) => { setPage(1); setCourseFilter(e.target.value); }}>
-          <option value="">All Courses</option>
-          {courses.map((c) => (
-            <option key={c._id} value={c._id}>{c.courseName}</option>
-          ))}
-        </select>
-
-        <select value={teacherFilter} onChange={(e) => { setPage(1); setTeacherFilter(e.target.value); }}>
-          <option value="">All Teachers</option>
-          {teachers.map((t) => (
-            <option key={t._id} value={t._id}>{t.name}</option>
-          ))}
-        </select>
-      </div>
-
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <table className="w-full bg-white border">
-          <thead>
-            <tr>
-              <th>Class</th>
-              <th>Code</th>
-              <th>Course</th>
-              <th>Teacher</th>
-              <th>Schedule</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {classes.map((cls) => (
-              <tr key={cls._id} className="border-t">
-                <td>{cls.className}</td>
-                <td>{cls.classCode}</td>
-                <td>{cls.courseLinked?.courseName || "-"}</td>
-                <td>{cls.teacherAssigned?.name || "-"}</td>
-                <td>{cls.schedule?.day} {cls.schedule?.time}</td>
-                <td>{cls.status}</td>
-                <td className="space-x-2">
-                  <button onClick={() => handleEdit(cls)}>Edit</button>
-                  <button onClick={() => setDeleteId(cls._id)} className="text-red-500">Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
 
       <Pagination page={page} totalPages={totalPages} onChange={setPage} />
 
