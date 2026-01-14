@@ -1,150 +1,124 @@
-📘 Student Learning Management System – Admin Dashboard
+# 📘 Student Learning Management System – Admin Dashboard
 
-A full-stack MERN-based Admin Panel for managing a Student Learning Management System (LMS).
-This application allows an Admin to securely manage Teachers, Courses, Classes, Students, and Parents through a clean and responsive dashboard.
+A full-stack **MERN-based Admin Panel** for managing a Student Learning Management System (LMS).  
+This application enables an **Admin** to securely manage **Teachers, Courses, Classes, Students, and Parents** through a clean and responsive dashboard.
 
-🚀 Live Demo
+---
 
-Frontend (Admin Panel): [Add Vercel/Netlify URL here]
+## 🚀 Live Demo
 
-Backend API: [Add Render/Railway URL here]
+- **Frontend (Admin Panel):** https://<your-frontend-url>
+- **Backend API:** https://<your-backend-url>
 
-🔐 Admin Login
+> Live URLs will be updated after deployment.
 
-Login URL:
+---
 
-/login
+## 🔐 Admin Login
 
+- **Login URL:** `/login`
 
-Test Admin Credentials:
-
+### Test Admin Credentials
 Email: admin@test.com
 Password: admin12345
 
+⚠️ These credentials are for testing only.  
+Admin registration is intentionally disabled in production.
 
-⚠️ These credentials are for testing only.
-In production, admin creation is intentionally disabled.
+---
 
-🧩 Features
-✅ Authentication & Security
+## 🧩 Features
 
-Admin login with JWT authentication
+### ✅ Authentication & Security
+- JWT-based admin authentication
+- Protected admin-only routes
+- Password hashing using bcrypt
+- Rate limiting & HTTP security headers (Helmet)
 
-Protected admin-only routes
+### ✅ Teacher Management
+- Create / Read / Update / Delete teachers
+- Profile image upload
+- Assign multiple subjects
+- Active / Inactive status
+- Search & pagination
 
-Secure password hashing (bcrypt)
+### ✅ Course Management
+- CRUD operations
+- Assign courses to teachers
+- Class-level filtering
+- Price & duration management
+- Search & pagination
 
-Rate limiting & HTTP security headers
+### ✅ Class Management
+- Link classes to courses & teachers
+- Schedule (day & time)
+- Maximum student limits
+- Active / Completed status
+- Filtering by course & teacher
 
-✅ Teacher Management
+### ✅ Students & Parents
+- View enrolled students
+- Class-based filtering
+- Parent–student relationship mapping
+- Pagination support
 
-Create / Read / Update / Delete teachers
+### ✅ Dashboard
+- System statistics overview
+- Recent activity summary
+- Responsive UI (desktop & mobile-friendly)
 
-Upload teacher profile image
+---
 
-Assign multiple subjects
+## 🛠️ Tech Stack
 
-Active / Inactive status
+### Frontend
+- React (Vite)
+- React Router
+- Axios
+- Tailwind CSS
 
-Search & pagination
+### Backend
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- JWT Authentication
+- Multer (file uploads)
+- Helmet & Express Rate Limit
 
-✅ Course Management
+---
 
-Create / Update / Delete courses
-
-Assign courses to teachers
-
-Class-level filtering
-
-Price & duration management
-
-Search & pagination
-
-✅ Class Management
-
-Create classes linked to courses & teachers
-
-Schedule (day & time)
-
-Max student limits
-
-Active / Completed status
-
-Filtering by course & teacher
-
-✅ Students & Parents
-
-View enrolled students
-
-Class-based filtering
-
-Parent–student relationship mapping
-
-Pagination support
-
-✅ Dashboard
-
-System statistics
-
-Recent activity overview
-
-Clean, responsive UI (desktop & mobile)
-
-🛠️ Tech Stack
-Frontend
-
-React (Vite)
-
-React Router
-
-Axios
-
-Tailwind CSS
-
-Backend
-
-Node.js
-
-Express.js
-
-MongoDB (Mongoose)
-
-JWT Authentication
-
-Multer (file uploads)
-
-Helmet & Rate Limiting
-
-📂 Project Structure
+## 📂 Project Structure
 lms-admin-panel/
 │
 ├── backend/
-│   ├── config/
-│   ├── models/
-│   ├── routes/
-│   ├── middleware/
-│   ├── uploads/
-│   ├── server.js
-│   └── .env.example
+│ ├── config/
+│ ├── middleware/
+│ ├── models/
+│ ├── routes/
+│ ├── uploads/
+│ ├── server.js
+│ └── .env.example
 │
 ├── frontend/
-│   ├── src/
-│   │   ├── api/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── context/
-│   │   └── layouts/
-│   ├── vite.config.js
-│   └── .env.example
+│ ├── src/
+│ │ ├── api/
+│ │ ├── components/
+│ │ ├── context/
+│ │ ├── layouts/
+│ │ ├── pages/
+│ │ └── routes/
+│ ├── vite.config.js
+│ └── .env.example
 │
 └── README.md
+---
 
-⚙️ Setup Instructions (Local Development)
-1️⃣ Clone Repository
-git clone <your-github-repo-url>
-cd lms-admin-panel
+## ⚙️ Setup Instructions (Local Development)
 
-2️⃣ Backend Setup
+### 1️⃣ Clone Repository
+```bash
+git clone https://github.com/diptanudas8299/lms-admin-panel.git
+cd lms-admin-panel2️⃣ Backend Setup
 cd backend
 npm install
 
@@ -163,7 +137,7 @@ Run backend:
 npm run dev
 
 
-Backend runs on:
+Backend runs at:
 
 http://localhost:5000
 
@@ -182,70 +156,86 @@ Run frontend:
 npm run dev
 
 
-Frontend runs on:
+Frontend runs at:
 
 http://localhost:5173
 
 🔗 API Endpoints (Sample)
 Auth
-POST   /api/auth/login
+
+POST /api/auth/login
 
 Teachers
-GET    /api/teachers
-POST   /api/teachers
-PUT    /api/teachers/:id
+
+GET /api/teachers
+
+POST /api/teachers
+
+PUT /api/teachers/:id
+
 DELETE /api/teachers/:id
 
 Courses
-GET    /api/courses
-POST   /api/courses
-PUT    /api/courses/:id
+
+GET /api/courses
+
+POST /api/courses
+
+PUT /api/courses/:id
+
 DELETE /api/courses/:id
 
 Classes
-GET    /api/classes
-POST   /api/classes
-PUT    /api/classes/:id
+
+GET /api/classes
+
+POST /api/classes
+
+PUT /api/classes/:id
+
 DELETE /api/classes/:id
 
 Dashboard
+
 GET /api/dashboard/stats
 
 🌍 Deployment
 Backend
 
-Deployed on Render / Railway
+Deployed on Render
 
 Uses MongoDB Atlas
 
-Environment variables configured in platform dashboard
+Environment variables configured in Render dashboard
 
 Frontend
 
-Deployed on Vercel / Netlify
+Deployed on Vercel
 
 Connected to deployed backend API
 
 📸 Screenshots / Demo
 
-Add screenshots or a short demo video link here
+Add screenshots or demo video link after deployment.
 
-🧪 Evaluation Checklist (Matched to Requirement)
+🧪 Evaluation Checklist (Requirement Match)
 
 ✔ Clean folder structure
 ✔ Protected admin routes
-✔ Full CRUD functionality
+✔ CRUD for Teachers, Courses, Classes
 ✔ Pagination & search
 ✔ Secure authentication
 ✔ Responsive UI
 ✔ Deployed frontend & backend
-✔ Professional README
+✔ Professional documentation
 
-⏱️ Time Taken
+⏱️ Time Duration
 
 2 days (as per assignment requirement)
 
 👤 Author
 
 Diptanu Das
-Full Stack Developer (MERN)
+MERN Stack Developer
+
+
